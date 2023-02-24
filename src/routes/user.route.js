@@ -1,5 +1,5 @@
-import express from "express";
-const route = express.Router();
+import {Router} from "express";
+const route = Router();
 
 import {create, findAll, findByID, update} from "../controllers/user.controller.js"
 import {validId, validUser} from "../middlewares/user.middlewares.js";
