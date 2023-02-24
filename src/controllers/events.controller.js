@@ -1,4 +1,4 @@
-import eventService from "../services/Event.service.js";
+import eventService from "../services/event.service.js";
 import mongoose from "mongoose";
 
 export const create = async (req, res) => {

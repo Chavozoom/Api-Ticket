@@ -2,7 +2,7 @@ import {
   createService,
   findAllService,
   updateService,
-} from "../services/User.service.js";
+} from "../services/user.service.js";
 
 export const create = async (req, res) => {
   try {

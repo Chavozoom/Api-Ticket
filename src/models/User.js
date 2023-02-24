@@ -10,10 +10,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   password: {
     type: String,
     required: true,
+  },
+  ticketsBought:{
+    event: String,
+    amount: Array,
   },
 });
 

@@ -9,12 +9,20 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    details: {
-        type: String,
+    date: {
+        type: Date,
         required: true,
     },
     address: {
         type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    },
+    ticketsAvaliable:{
+        type: Array,
         required: true,
     },
 });
