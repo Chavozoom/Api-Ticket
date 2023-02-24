@@ -1,8 +1,10 @@
-const route = require("express").Router();
-const eventsController = require("../controllers/events.controller")
+import express from "express";
+const route = express.Router();
+import {create, findAll, findByID, update} from "../controllers/events.controller.js";
 
-route.post("/", eventsController.create);
-route.get("/", eventsController.findAll);
-route.get("/:id", eventsController.findByID);
+route.post("/", create);
+route.get("/", findAll);
+route.get("/:id", findByID);
+route.patch("/:id", update);
 
-module.exports = route;
+export default route;

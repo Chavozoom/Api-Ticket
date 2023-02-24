@@ -1,10 +1,11 @@
-const express = require("express");
-require('dotenv').config()
+import express from "express";
+import * as dotenv from 'dotenv' 
+dotenv.config()
 
-const userRoute = require("./src/routes/user.route");
-const eventRoute = require("./src/routes/event.route");
+import userRoute  from "./src/routes/user.route.js";
+import eventRoute from "./src/routes/event.route.js";
 
-const connectDatabase = require("./src/database/db");
+import connectDatabase from "./src/database/db.js";
 
 const app = express();
 connectDatabase();
@@ -14,5 +15,4 @@ app.use("/events", eventRoute);
 
 const port = 4000;
 
-
-app.listen(port, console.log("App is running at port " + port))
+app.listen(port, console.log(`App is running at port ${port}`));
