@@ -16,10 +16,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ticketsBought:{
-    event: String,
-    amount: Array,
-  },
+  eventTicketsBought: [{
+    amount:{
+      type: Number,
+      required: true,
+    },
+    event:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Event",
+      required: true,
+    },
+  }],
 });
 
 UserSchema.pre("save", async function (next) {

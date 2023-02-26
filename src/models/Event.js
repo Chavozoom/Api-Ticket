@@ -22,7 +22,7 @@ const EventSchema = new mongoose.Schema({
         required: true,
     },
     ticketsAvaliable:{
-        type: Array,
+        type: Number,
         required: true,
     },
 });

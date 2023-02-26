@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 
 export const create = async (req, res) => {
   try {
-    const { title, description, details, address } = req.body;
+    const { title, description, details, address, date, image, ticketsAvaliable } = req.body;
 
-    if (!title || !description || !details || !address) {
+    if (!title || !description || !details || !address || !date || !image || !ticketsAvaliable) {
       res.status(400).send({ message: "Error" });
     }
 
@@ -17,13 +17,6 @@ export const create = async (req, res) => {
 
     res.status(201).send({
       message: "OK!",
-      event: {
-        id: event._id,
-        title,
-        description,
-        details,
-        address,
-      },
     });
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -66,7 +59,7 @@ export const findByID = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { title, description, details, address } = req.body;
+    const { title, description, details, address, date, image, ticketsAvaliable } = req.body;
     if (!title && !description && !details && !address) {
       res.status(400).send({ message: "Submit at least one field to update" });
     }
@@ -82,11 +75,10 @@ export const update = async (req, res) => {
       return res.status(400).send({ message: "Event not found" });
     }
 
-    await eventService.updateService(id, title, description, details, address);
+    await eventService.updateService(id, title, description, details, address, date, image, ticketsAvaliable);
 
     res.send({ message: "Event successfully updated" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
-
