@@ -1,8 +1,8 @@
 import {Router} from "express";
-const router = Router();
-
 import {create, findAll, findByID, update} from "../controllers/user.controller.js"
 import {validId, validUser} from "../middlewares/user.middlewares.js";
+
+const router = Router();
 
 router.post("/", create);
 router.get("/", findAll);

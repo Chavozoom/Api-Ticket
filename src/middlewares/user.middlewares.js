@@ -26,7 +26,7 @@ export const validUser = async (req, res, next) => {
     req.id = id;
     req.user = user;
 
-    next();
+    return next();
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

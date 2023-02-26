@@ -1,31 +1,48 @@
-import eventService from "../services/event.service.js";
+import {
+  createService,
+  findAllService,
+  findByIdService,
+  updateService,
+} from "../services/event.service.js";
 import mongoose from "mongoose";
 
 export const create = async (req, res) => {
   try {
-    const { title, description, details, address, date, image, ticketsAvaliable } = req.body;
+    const { title, description, address, date, image, ticketsAvaliable } =
+      req.body;
 
-    if (!title || !description || !details || !address || !date || !image || !ticketsAvaliable) {
-      res.status(400).send({ message: "Error" });
+    if (
+      !title ||
+      !description ||
+      !address ||
+      !date ||
+      !image ||
+      !ticketsAvaliable
+    ) {
+      res.status(400).send({
+        message: "Submit all fields for registration",
+      });
     }
 
-    const event = await eventService.createService(req.body);
-
-    if (!event) {
-      return res.status(400).send({ message: "Error creating event" });
-    }
-
-    res.status(201).send({
-      message: "OK!",
+    await createService({
+      title,
+      description,
+      address,
+      date,
+      image,
+      ticketsAvaliable,
+      userId: req.userId,
     });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
+
+    res.send(201);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
   }
 };
 
 export const findAll = async (req, res) => {
   try {
-    const events = await eventService.findAllService();
+    const events = await findAllService();
 
     if (events.length === 0) {
       return res.status(400).send({ message: "No registred events" });
@@ -45,7 +62,7 @@ export const findByID = async (req, res) => {
       return res.status(400).send({ message: "Invalid Id" });
     }
 
-    const event = await eventService.findByIdService(id);
+    const event = await findByIdService(id);
 
     if (!event) {
       return res.status(400).send({ message: "User not found" });
@@ -59,8 +76,16 @@ export const findByID = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { title, description, details, address, date, image, ticketsAvaliable } = req.body;
-    if (!title && !description && !details && !address) {
+    const { title, description, address, date, image, ticketsAvaliable } =
+      req.body;
+    if (
+      !title &&
+      !description &&
+      !address &&
+      !date &&
+      !image &&
+      !ticketsAvaliable
+    ) {
       res.status(400).send({ message: "Submit at least one field to update" });
     }
 
@@ -69,13 +94,21 @@ export const update = async (req, res) => {
       return res.status(400).send({ message: "Invalid Id" });
     }
 
-    const event = await eventService.findByIdService(id);
+    const event = await findByIdService(id);
 
     if (!event) {
       return res.status(400).send({ message: "Event not found" });
     }
 
-    await eventService.updateService(id, title, description, details, address, date, image, ticketsAvaliable);
+    await updateService(
+      id,
+      title,
+      description,
+      address,
+      date,
+      image,
+      ticketsAvaliable
+    );
 
     res.send({ message: "Event successfully updated" });
   } catch (error) {

@@ -3,6 +3,7 @@ import { loginService, generateToken } from "../services/auth.service.js";
 
 export const login = async (req, res) => {
   try {
+    
     const { email, password } = req.body;
 
     const user = await loginService(email);

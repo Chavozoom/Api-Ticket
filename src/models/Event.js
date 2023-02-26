@@ -25,6 +25,10 @@ const EventSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
 });
 
 const Event = mongoose.model("Event", EventSchema);
