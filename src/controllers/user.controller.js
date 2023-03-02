@@ -25,6 +25,7 @@ export const create = async (req, res) => {
         name,
         email,
         password,
+        userPhoto,
       },
     });
   } catch (error) {
@@ -57,14 +58,14 @@ export const findByID = (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name && !email && !password) {
+    const { name, email, password, userPhoto } = req.body;
+    if (!name && !email && !password && !userPhoto) {
       res.status(400).send({ message: "Submit at least one field to update" });
     }
 
     const { id } = req;
 
-    await updateService(id, name, email, password);
+    await updateService(id, name, email, password, userPhoto);
 
     res.send({ message: "User successfully updated" });
   } catch (error) {

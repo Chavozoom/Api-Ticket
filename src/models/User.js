@@ -15,6 +15,8 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
+
   },
   eventTicketsBought: [{
     amount:{
@@ -27,6 +29,9 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   }],
+  userPhoto:{
+    type: String,
+  }
 });
 
 UserSchema.pre("save", async function (next) {

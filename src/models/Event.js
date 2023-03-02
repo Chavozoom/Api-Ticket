@@ -21,12 +21,13 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    ticketsAvaliable:{
+    ticketsAvailable:{
         type: Number,
         required: true,
     },
-    userId:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required: true,
     },
 });

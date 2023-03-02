@@ -3,7 +3,6 @@ import { loginService, generateToken } from "../services/auth.service.js";
 
 export const login = async (req, res) => {
   try {
-    
     const { email, password } = req.body;
 
     const user = await loginService(email);
@@ -19,7 +18,7 @@ export const login = async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.status(200).send({token});
+    res.status(200).send({ token });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
