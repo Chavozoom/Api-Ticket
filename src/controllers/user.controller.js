@@ -6,7 +6,7 @@ import {
 
 export const create = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, userPhoto, eventTicketsBought } = req.body;
 
     if (!name || !email || !password) {
       res.status(400).send({ message: "Error" });
@@ -24,8 +24,8 @@ export const create = async (req, res) => {
         id: user._id,
         name,
         email,
-        password,
         userPhoto,
+        eventTicketsBought,
       },
     });
   } catch (error) {

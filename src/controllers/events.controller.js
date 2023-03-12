@@ -1,23 +1,30 @@
 import {
   createService,
   findAllService,
-  findByIdService,
   updateService,
   countEvents,
 } from "../services/event.service.js";
-import mongoose from "mongoose";
 
 export const create = async (req, res) => {
   try {
-    const { title, description, address, date, image, ticketsAvailable } =
-      req.body;
+    const {
+      title,
+      description,
+      address,
+      date,
+      image,
+      ticketsAvailable,
+      price,
+    } = req.body;
+
     if (
-      !title ||
-      !description ||
-      !address ||
-      !date ||
-      !image ||
-      !ticketsAvailable
+      !title &&
+      !description &&
+      !address &&
+      !date &&
+      !image &&
+      !ticketsAvailable &&
+      !price
     ) {
       return res.status(400).send({
         message: "Missing required fields",
@@ -31,7 +38,7 @@ export const create = async (req, res) => {
       date,
       image,
       ticketsAvailable,
-      user: req.userId,
+      price,
     });
 
     res.status(201).send({ message: "Event created successfully" });
@@ -78,13 +85,13 @@ export const findAll = async (req, res) => {
       total,
       results: events.map((event) => ({
         id: event._id,
-        title: event.description,
+        title: event.title,
+        description: event.description,
         date: event.date,
         address: event.address,
         image: event.image,
         ticketsAvailable: event.ticketsAvailable,
-        username: event.user.name,
-        userPhoto: event.user.userPhoto,
+        price: event.price,
       })),
     });
   } catch (error) {
@@ -94,17 +101,7 @@ export const findAll = async (req, res) => {
 
 export const findByID = async (req, res) => {
   try {
-    const id = req.params.id;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).send({ message: "Invalid Id" });
-    }
-
-    const event = await findByIdService(id);
-
-    if (!event) {
-      return res.status(404).send({ message: "Event not found" });
-    }
+    const event = req.event;
 
     res.send(event);
   } catch (error) {
@@ -114,19 +111,29 @@ export const findByID = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { title, description, address, date, image, ticketsAvailable } =
-      req.body;
+    const {
+      title,
+      description,
+      address,
+      date,
+      image,
+      ticketsAvailable,
+      price,
+    } = req.body;
 
-    const id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).send({ message: "Invalid Id" });
+    if (
+      !title &&
+      !description &&
+      !address &&
+      !date &&
+      !image &&
+      !ticketsAvailable &&
+      !price
+    ) {
+      res.status(400).send({ message: "Submit at least one field to update" });
     }
 
-    const event = await findByIdService(id);
-
-    if (!event) {
-      return res.status(404).send({ message: "Event not found" });
-    }
+    const {id} = req;
 
     await updateService(
       id,
@@ -135,7 +142,8 @@ export const update = async (req, res) => {
       address,
       date,
       image,
-      ticketsAvailable
+      ticketsAvailable,
+      price
     );
 
     res.send({ message: "Event successfully updated" });
